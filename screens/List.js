@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableHighlight } from 'react-native';
 
-const source = require('../resources/movies.json');
-
 class List extends React.Component {
   constructor(props) {
     super(props)
@@ -35,8 +33,9 @@ class List extends React.Component {
   }
 
   render() {
+    const { data } = this.props
     return (
-      <FlatList data={ source } renderItem={ this.renderItem } keyExtractor={ this.keyExtractor } ItemSeparatorComponent={ this.renderSeparator }/>
+      <FlatList data={ data } renderItem={ this.renderItem } keyExtractor={ this.keyExtractor } ItemSeparatorComponent={ this.renderSeparator }/>
     );
   }
 }

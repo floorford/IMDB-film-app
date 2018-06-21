@@ -1,25 +1,27 @@
+// importing react, react native components and redux
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
 
-import List from './screens/List';
-import Detail from './screens/Detail';
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 
-import { StatusBar } from 'react-native';
+import reducer from './data/reducer';
+import initial from './data/initial';
 
-// Change the text colour to white (iOS only)
-StatusBar.setBarStyle('light-content');
+const store = createStore(
+  reducer,
+  initial,
+);
 
-const RootNavigator = createStackNavigator({
-  List: List,
-  Detail: Detail
-}, {
-  navigationOptions: {
-    headerStyle: {
-      backgroundColor: '#604c82'
-    },
-    headerTintColor: '#ffffff'
-  }
-});
+// import the Main App component
+import Main from "./Main";
 
-export default RootNavigator;
+// pass our store through to Main using props
+const App = () => (
+  <Provider store={ store }>
+    <Main />
+  </Provider>
+)
+
+export default App;
+
+// https://github.com/rt2zz/redux-persist TRY GET ME WORKING
