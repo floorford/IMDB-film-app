@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, TouchableHighlight, Text, View, Image, ScrollView, Button } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { WebBrowser } from 'expo';
 
 import moment from 'moment';
 
@@ -46,7 +48,17 @@ class Detail extends React.Component {
 
 Detail.navigationOptions = ({ navigation }) => ({
   title: navigation.getParam('title'),
-  body: navigation.getParam('body')
+  body: navigation.getParam('body'),
+  headerRight: (
+    <TouchableHighlight
+      onPress={
+        async (url) => WebBrowser.openBrowserAsync(navigation.getParam('url'))
+      }
+      style={{marginRight: 5}}
+    >
+      <Ionicons name="ios-film" size={38} color="white" />
+    </TouchableHighlight>
+   ),
 })
 
 const styles = StyleSheet.create({
