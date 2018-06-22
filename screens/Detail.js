@@ -1,30 +1,45 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+
+import moment from 'moment';
 
 class Detail extends React.Component {
   render() {
     const data = this.props.navigation.getParam('body')
     const showing = data.showtimes[0]
+    const showTime = moment(`${showing.startsAtDate}T${showing.startsAtTime}`).calendar()
 
-    console.log(showing.startsAtDate)
     const source = {
       uri: `https://image.tmdb.org/t/p/original/${data.tmdbImageId}.jpg`
     };
 
     const style = {
       marginTop: 10,
-      height: 500,
-      width: 300
+      height: 400,
+      width: 300,
+      marginLeft: 40
     };
 
+    if (data.tmdbRating >= '60%') {
+      colour = '#265819'
+    } else if (data.tmdbRating >= '40%' && data.tmdbRating <= '59%') {
+      colour = '#71500f'
+    } else {
+      colour = '#7e2310'
+    }
+
     return (
-      <View style={styles.container}>
+      <ScrollView style={ styles.container }>
         <Image source={ source } style={ style }/>
-        <Text>Released in: { data.year }</Text>
-        <Text>Rating: { data.tmdbRating }%</Text>
-        <Text>Showtimes: { showing.startsAtDate } at { showing.startsAtTime } on { showing.channel }</Text>
-        <Text>{ data.synopsis }</Text>
-      </View>
+        <View style={ styles.detailCont }>
+          <Text style={ styles.relShow }>Released in: { data.year }</Text>
+          <Text style={ [ styles.rating, {color: colour} ] }>Rating: { data.tmdbRating }%</Text>
+        </View>
+        <Text style={ styles.relShow }>Showtimes:</Text>
+        <Text style={ styles.time }>{showTime} on {showing.channel}</Text>
+        <View style={ styles.line}/>
+        <Text style={ styles.syn }>{ data.synopsis }</Text>
+      </ScrollView>
     );
   }
 }
@@ -38,8 +53,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  detailCont: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20
+  },
+  relShow: {
+    marginLeft: 10,
+    fontSize: 18,
+  },
+  rating: {
+    marginRight: 10,
+    fontSize: 18,
+  },
+  time: {
+    fontSize: 15,
+    marginLeft: 10,
+    marginBottom: 10
+  },
+  syn: {
+    marginTop: 10,
+    fontSize: 15,
+    marginLeft: 10,
+    marginRight: 10
+  },
+  line: {
+    height: 1,
+    backgroundColor: '#777',
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 

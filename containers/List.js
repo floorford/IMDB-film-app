@@ -8,7 +8,7 @@ import List from "../screens/List";
 // it should return an object, which gets passed in as props to the connected component
 const mapStateToProps = state => {
   return {
-    names: state.fims,
+    films: state.films,
   };
 };
 

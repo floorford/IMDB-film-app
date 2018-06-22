@@ -23,5 +23,3 @@ const App = () => (
 )
 
 export default App;
-
-// https://github.com/rt2zz/redux-persist TRY GET ME WORKING
